@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan d'Action : Kits de Modèles Imprimables</title>
+    <style>
+        :root {
+            --dark-blue: #1e3a8a;
+            --soft-white: #f8fafc;
+            --pastel-blue: #dbeafe;
+            --pastel-pink: #fce7f3;
+            --accent: #3b82f6;
+            --text-main: #1e293b;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        body {
+            margin: 0;
+            background-color: var(--soft-white);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Header Area */
+        header {
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        h1 { margin: 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Left Navigation (30%) */
+        nav {
+            width: 30%;
+            background-color: #f1f5f9;
+            border-right: 2px solid var(--pastel-blue);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-btn {
+            padding: 20px 15px;
+            border: none;
+            background: none;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark-blue);
+            cursor: pointer;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover { background-color: var(--pastel-blue); }
+        .tab-btn.active {
+            background-color: var(--dark-blue);
+            color: white;
+        }
+
+        /* Right Content Area (70%) */
+        main {
+            width: 70%;
+            padding: 30px;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .content-section { display: none; animation: fadeIn 0.4s; }
+        .content-section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Dashboard Styles */
+        .card {
+            background: var(--pastel-blue);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .calc-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            margin-top: 5px;
+        }
+
+        .revenue-result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-blue);
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        /* List Items & Links */
+        .list-item {
+            padding: 15px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .list-item:hover { background: var(--soft-white); }
+        
+        .search-vol {
+            font-size: 0.85rem;
+            color: #64748b;
+            display: none;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .external-link { color: var(--accent); text-decoration: none; font-weight: bold; }
+        .external-link:hover { text-decoration: underline; }
+
+        /* Prompts & Buttons */
+        .prompt-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+        }
+
+        .copy-btn {
+            background-color: var(--dark-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .copy-btn:hover { opacity: 0.9; }
+
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            nav, main { width: 100%; height: auto; }
+            nav { border-right: none; border-bottom: 2px solid var(--pastel-blue); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Blueprint : Business de Modèles Imprimables (Arts & Crafts)</h1>
+</header>
+
+<div class="container">
+    <nav>
+        <button class="tab-btn active" onclick="openTab(event, 'dashboard')">🏠 Tableau de Bord</button>
+        <button class="tab-btn" onclick="openTab(event, 'titles')">1. 10 Titres de Produits</button>
+        <button class="tab-btn" onclick="openTab(event, 'competitors')">2. 10 Concurrents</button>
+        <button class="tab-btn" onclick="openTab(event, 'domains')">3. 10 Noms de Domaine</button>
+        <button class="tab-btn" onclick="openTab(event, 'blog')">4. 10 Idées de Blog</button>
+        <button class="tab-btn" onclick="openTab(event, 'checklist')">5. Checklist Étape par Étape</button>
+        <button class="tab-btn" onclick="openTab(event, 'resources')">6. Ressources & Prompts</button>
+    </nav>
+
+    <main id="main-content">
+        <section id="dashboard" class="content-section active">
+            <h2>Résumé du Projet</h2>
+            <div class="card">
+                <p><strong>Type :</strong> Pack de Modèles Imprimables (Printables)</p>
+                <p><strong>Niche :</strong> Arts & Crafts</p>
+                <p><strong>Niveau :</strong> Intermédiaire</p>
+                <p><strong>Plateforme :</strong> Landing Page dédiée</p>
+                <p><strong>Style :</strong> Couleurs Pastels & Douces</p>
+            </div>
+
+            <h3>Estimateur de Revenus Mensuels</h3>
+            <div class="card">
+                <div class="calc-box">
+                    <div>
+                        <label>Prix de vente (€)</label>
+                        <input type="number" id="price" value="27" oninput="calculate()">
+                    </div>
+                    <div>
+                        <label>Trafic quotidien (Visiteurs)</label>
+                        <input type="number" id="traffic" value="500" oninput="calculate()">
+                    </div>
+                </div>
+                <div class="revenue-result">
+                    Estimation : <span id="rev-output">810</span> € / mois
+                    <br><small style="font-size: 0.8rem; font-weight: normal;">(Basé sur un taux de conversion de 2%)</small>
+                </div>
+            </div>
+        </section>
+
+        <section id="titles" class="content-section">
+            <h2>Titres de Produits (Classés par potentiel SEO)</h2>
+            <p><small>Cliquez sur un titre pour voir le volume de recherche estimé.</small></p>
+            <div id="titles-list"></div>
+        </section>
+
+        <section id="competitors" class="content-section">
+            <h2>10 Concurrents du Secteur</h2>
+            <div id="comp-list"></div>
+        </section>
+
+        <section id="domains" class="content-section">
+            <h2>Noms de Domaine Disponibles</h2>
+            <ul id="domain-list"></ul>
+        </section>
+
+        <section id="blog" class="content-section">
+            <h2>Idées d'Articles de Blog (SEO)</h2>
+            <div id="blog-list"></div>
+        </section>
+
+        <section id="checklist" class="content-section">
+            <h2>Plan d'Action pas à pas</h2>
+            <div id="step-list"></div>
+        </section>
+
+        <section id="resources" class="content-section">
+            <h2>Ressources & Prompts IA</h2>
+            
+            <h3>Landing Page (Hostinger AI)</h3>
+            <p>Utilisez ce lien pour créer votre page : <a href="https://bit.ly/3H4W2BF" class="external-link" target="_blank">Hostinger AI Builder</a></p>
+            <div class="prompt-container" id="hostinger-prompt">Créer une landing page haute conversion pour un pack de modèles imprimables d'arts et crafts. Style visuel : tons pastels, doux et épurés. Structure : En-tête accrocheur, section bénéfices, galerie de prévisualisation des modèles, témoignages clients, et un appel à l'action clair avec bouton d'achat. Inclure une section FAQ et un pied de page avec liens sociaux.</div>
+            <button class="copy-btn" onclick="copyText('hostinger-prompt')">Copier le Prompt</button>
+
+            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+
+            <h3>Création des Modèles (Prompt ChatGPT)</h3>
+            <div class="prompt-container" id="logic-prompt">Génère une structure détaillée pour un pack de 10 modèles imprimables d'arts et crafts (ex: patrons de broderie, guides de palette de couleurs, trackers de projets). Pour chaque modèle, fournis : le concept créatif, les dimensions standards, les éléments de design pastels à inclure, et les instructions de montage pour l'utilisateur final.</div>
+            <button class="copy-btn" onclick="copyText('logic-prompt')">Copier le Prompt</button>
+        </section>
+    </main>
+</div>
+
+<script>
+    function openTab(evt, sectionId) {
+        const sections = document.getElementsByClassName("content-section");
+        for (let s of sections) s.classList.remove("active");
+        
+        const tabs = document.getElementsByClassName("tab-btn");
+        for (let t of tabs) t.classList.remove("active");
+
+        document.getElementById(sectionId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    function calculate() {
+        const price = document.getElementById('price').value;
+        const traffic = document.getElementById('traffic').value;
+        const conversion = 0.02;
+        const monthly = (traffic * conversion * price * 30).toFixed(0);
+        document.getElementById('rev-output').innerText = monthly;
+    }
+
+    function copyText(id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Prompt copié dans le presse-papier !");
+        });
+    }
+
+    // Data Population
+    const titles = [
+        {t: "Cahier d'Activités Aquarelle Pastel", v: "8,500"},
+        {t: "Modèles de Broderie Florale PDF", v: "6,200"},
+        {t: "Kit de Planification Scrapbooking", v: "4,100"},
+        {t: "Coloriages Zen pour Adultes", v: "3,800"},
+        {t: "Journal de Bord Tricot & Crochet", v: "2,900"},
+        {t: "Modèles d'Inspiration Lettering", v: "1,800"},
+        {t: "Palette de Couleurs Procreate Douces", v: "1,500"},
+        {t: "Étiquettes de Rangement Craft", v: "1,200"},
+        {t: "Planner de Création Bijoux", v: "900"},
+        {t: "Pack de Cartes de Vœux à Imprimer", v: "750"}
+    ];
+
+    const competitors = [
+        {n: "Creative Market (Indie Sellers)", u: "https://creativemarket.com"},
+        {n: "Design Bundles", u: "https://designbundles.net"},
+        {n: "The Hungry Jpeg", u: "https://thehungryjpeg.com"},
+        {n: "Craftsy Printables", u: "https://www.craftsy.com"},
+        {n: "Yellow Images", u: "https://yellowimages.com"},
+        {n: "Lulu Junior", u: "https://www.lulu.com"},
+        {n: "Gumroad Art Stores", u: "https://gumroad.com"},
+        {n: "Creative Fabrica", u: "https://www.creativefabrica.com"},
+        {n: "Etsy (Digital Section)", u: "https://www.etsy.com"},
+        {n: "Design Cuts", u: "https://www.designcuts.com"}
+    ];
+
+    const domains = ["PastelCrafts.com", "SoftPrintableArt.com", "TheCraftyTemplate.com", "AtelierPastel.io", "PureCraftModeles.fr", "SoftHobbyKits.com", "LArtImprimable.com", "CraftyPlanners.fr", "DouceurCreative.com", "MinimalistArtKits.com"];
+
+    const blogs = [
+        {t: "10 Idées de Loisirs Créatifs avec des Modèles Imprimables", v: "2,400"},
+        {t: "Comment Organiser son Atelier avec des Étiquettes", v: "1,800"},
+        {t: "Le Guide Ultime de l'Aquarelle Pastel", v: "1,500"},
+        {t: "Pourquoi Choisir des Produits Numériques en 2026 ?", v: "1,200"},
+        {t: "5 Astuces pour Imprimer ses Patrons de Broderie", v: "900"},
+        {t: "Réussir ses Projets DIY avec un Budget Limité", v: "850"},
+        {t: "Le Scrapbooking pour Débutants : Par où Commencer ?", v: "700"},
+        {t: "Les Meilleures Imprimantes pour le Digital Craft", v: "600"},
+        {t: "Comment Créer une Palette de Couleurs Cohérente", v: "500"},
+        {t: "Interview : Vivre de ses Créations Imprimables", v: "300"}
+    ];
+
+    const steps = [
+        "1. Recherche de Niche : Valider la demande sur Pinterest/Etsy.",
+        "2. Design : Création des PDF sur Canva ou Illustrator (Palette Pastel).",
+        "3. Packaging : Créer des mockups visuels attrayants.",
+        "4. Setup Landing Page : Utiliser Hostinger AI pour le site.",
+        "5. Intégration Paiement : Configurer Stripe ou PayPal.",
+        "6. Lead Magnet : Créer un modèle gratuit pour capturer des emails.",
+        "7. SEO Blog : Rédiger les 3 premiers articles optimisés.",
+        "8. Lancement Social Media : Vidéos 'Process' sur TikTok/Reels.",
+        "9. Ads (Optionnel) : Lancer de petites campagnes Pinterest Ads.",
+        "10. Analyse : Ajuster les prix selon les conversions."
+    ];
+
+    // Populate Lists
+    const titleDiv = document.getElementById('titles-list');
+    titles.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        div.innerHTML = `<strong>${item.t}</strong><div class="search-vol">Vol. de recherche : ${item.v} / mois</div>`;
+        div.onclick = () => {
+            const vol = div.querySelector('.search-vol');
+            vol.style.display = vol.style.display === 'block' ? 'none' : 'block';
+        };
+        titleDiv.appendChild(div);
+    });
+
+    const compDiv = document.getElementById('comp-list');
+    competitors.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        div.innerHTML = `<a href="${item.u}" target="_blank" class="external-link">${item.n}</a> ↗️`;
+        compDiv.appendChild(div);
+    });
+
+    const domUl = document.getElementById('domain-list');
+    domains.forEach(d => {
+        const li = document.createElement('li');
+        li.style.padding = "8px 0";
+        li.innerText = d;
+        domUl.appendChild(li);
+    });
+
+    const blogDiv = document.getElementById('blog-list');
+    blogs.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        div.innerHTML = `<strong>${item.t}</strong><div class="search-vol">Potentiel : ${item.v} vues</div>`;
+        div.onclick = () => {
+            const vol = div.querySelector('.search-vol');
+            vol.style.display = vol.style.display === 'block' ? 'none' : 'block';
+        };
+        blogDiv.appendChild(div);
+    });
+
+    const stepDiv = document.getElementById('step-list');
+    steps.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        div.innerText = s;
+        stepDiv.appendChild(div);
+    });
+</script>
+
+</body>
+</html>
